@@ -1,0 +1,98 @@
+name: deploy
+#author: 'robert.zheng'
+#description: 'workflow to create an Intranet Webserver NGINX image and push it to AWS ECR Dev as well as to the Github Package Repo'
+
+on:
+  #push:
+
+  # branches: [main]
+
+  # tags: [v0.*, v2]
+
+  #paths:
+
+  #- 'apps/web/**'
+
+  workflow_dispatch:
+    inputs:
+      semver:
+        description: "semver like 1.2.3"
+
+        required: true
+
+        default: "latest"
+
+# new syntax (https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/):
+
+#run: echo "Github user: ${{ GITHUB.ACTOR }}" >> $GITHUB_OUTPUT
+
+env:
+  IMAGE_NAME: add_wiki_pages
+  ORG: Zheng-Bote
+  REGISTRY: ghcr.io
+  RELEASE_TAG: ${{ inputs.semver }}
+
+jobs:
+  build-and-deploy-DEV:
+    environment: dev
+
+    #runs-on: [atc-ubuntu-latest]
+
+    runs-on: [ubuntu-latest]
+
+    permissions:
+      contents: read
+      packages: write
+      pages: write
+      id-token: write
+      #attestations: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: set up image name
+        id: setup
+        run: echo "::set-output name=IMAGE_NAME::${{ env.ORG }}/${{ env.IMAGE_NAME }}"
+
+      - name: set up qemu
+        uses: docker/setup-qemu-action@v1
+
+      - name: set up Docker context for buildx
+        id: buildx-context
+        run: |
+          docker context create builders
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.6.0
+        id: buildx
+        with:
+          version: latest
+          endpoint: builders
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Re-Tag Docker image
+        run: |
+          docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+
+      - name: Push Docker image to Package
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+
+      - name: remove docker context
+        if: ${{ always() }}
+        run: docker context rm builders --force
