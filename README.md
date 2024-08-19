@@ -1,6 +1,6 @@
 # Github Wiki Publish Action
 
-This GitHub Action publishes the contents of a directory to your project's [wiki][github wiki] from a workflow.
+This GitHub Action publishes the contents of a directory to your project's wiki from a workflow.
 
 ## Usage
 
@@ -9,7 +9,7 @@ add a step using `Zheng-Bote/gh-a_cr-wiki@main`
 with a path to a directory containing the documentation you wish to upload.
 
 ```yml
-name: Documentation
+name: add Wiki pages
 
 on: [push]
 
@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       # Additional steps to generate documentation in "Documentation" directory
       - name: Upload Documentation to Wiki
-        uses: SwiftDocOrg/github-wiki-publish-action@v4
+        uses: Zheng-Bote/gh-a_cr-wiki@main
         with:
           path: path/to/your/docs/
         env:
