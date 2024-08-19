@@ -85,9 +85,20 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Re-Tag Docker image
-        run: |
-          docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+      - name: Build image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          file: /Dockerfile
+          context: .
+          push: false
+          load: true
+          tags: ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      #- name: Re-Tag Docker image
+      #  run: |
+      #    docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
 
       - name: Push Docker image to Package
         run: |
