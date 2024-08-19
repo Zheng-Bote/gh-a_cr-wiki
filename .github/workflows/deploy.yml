@@ -98,11 +98,11 @@ jobs:
 
       - name: Re-Tag Docker image
         run: |
-          docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+          docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
 
       - name: Push Docker image to Package
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+          docker push ${{ env.REGISTRY }}/${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
 
       - name: remove docker context
         if: ${{ always() }}
