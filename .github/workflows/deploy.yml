@@ -96,9 +96,9 @@ jobs:
           tags: ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      #- name: Re-Tag Docker image
-      #  run: |
-      #    docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+      - name: Re-Tag Docker image
+        run: |
+          docker tag ${{ steps.setup.outputs.IMAGE_NAME }}:${{ env.RELEASE_TAG }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
 
       - name: Push Docker image to Package
         run: |
