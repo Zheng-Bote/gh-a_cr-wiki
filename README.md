@@ -1,8 +1,6 @@
 # Github Wiki Publish Action
 
-This [GitHub Action][github actions]
-publishes the contents of a directory to your project's [wiki][github wiki]
-from a workflow.
+This GitHub Action publishes the contents of a directory to your project's [wiki][github wiki] from a workflow.
 
 ## Usage
 
