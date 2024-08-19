@@ -40,6 +40,7 @@ if [ -z "${WIKI_COMMIT_MESSAGE:-}" ]; then
     WIKI_COMMIT_MESSAGE='Automatically publish wiki'
 fi
 
+#https://github.com/Zheng-Bote/gh-a_page_list-tags.wiki.git
 GIT_REPOSITORY_URL="https://${GH_PERSONAL_ACCESS_TOKEN}@${GITHUB_SERVER_URL#https://}/$GITHUB_REPOSITORY.wiki.git"
 
 debug "Checking out wiki repository"
