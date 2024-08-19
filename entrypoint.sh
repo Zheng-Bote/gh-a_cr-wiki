@@ -46,7 +46,7 @@ debug "Checking out wiki repository"
 tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
 (
     cd "$tmp_dir" || exit 1
-    git init
+    git init -b main
     git config user.name "$GITHUB_ACTOR"
     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
     git config --global init.defaultBranch main
