@@ -28,7 +28,7 @@ on:
 
 env:
   IMAGE_NAME: add_wiki_pages
-  ORG: Zheng-Bote
+  ORG: zheng-bote
   REGISTRY: ghcr.io
   RELEASE_TAG: ${{ inputs.semver }}
 
