@@ -47,7 +47,8 @@ debug "Checking out wiki repository"
 tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX)
 (
     cd "$tmp_dir" || exit 1
-    git init -b main
+    # git init -b main
+    git init
     git config user.name "$GITHUB_ACTOR"
     git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
     git config --global init.defaultBranch main
@@ -63,10 +64,10 @@ done
 debug "Committing and pushing changes"
 (
     cd "$tmp_dir" || exit 1
-    git branch -m main
+    #git branch -m main
     git add .
     git commit -m "$WIKI_COMMIT_MESSAGE"
-    git push --set-upstream "$GIT_REPOSITORY_URL" main
+    git push --set-upstream "$GIT_REPOSITORY_URL" master
 ) || exit 1
 
 rm -rf "$tmp_dir"
