@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       # Additional steps to generate documentation in "Documentation" directory
       - name: Upload Documentation to Wiki
-        uses: Zheng-Bote/gh-a_cr-wiki@main
+        uses: Zheng-Bote/gh-a_cr-wiki@v1
         with:
           path: path/to/your/docs/
         env:
