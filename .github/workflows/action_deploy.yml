@@ -61,3 +61,8 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action/publish-sbom@v0
+          with:
+            sbom-artifact-match: ".*\\.spdx$"
