@@ -42,10 +42,6 @@ jobs:
           newTag: ${{ env.TAG }}
           generateArtifact: true
 
-      - name: Test the generated release notes
-        run: |
-          echo "${{ steps.relnotes.outputs.relnotes }}"
-
       - name: add Summary item
         run: |
           echo "Changelog" >> $GITHUB_STEP_SUMMARY
