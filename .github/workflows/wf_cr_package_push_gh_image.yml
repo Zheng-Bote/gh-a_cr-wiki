@@ -56,14 +56,22 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Generate SBOM
+      # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)."
+      - name: Generate Docker image attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Generate SBOM JSON of Docker image
         uses: anchore/sbom-action@v0
         with:
           image: ${{ env.REGISTRY }}/zheng-bote/gh-a_cr-wiki:release
           format: "cyclonedx-json"
           output-file: "sbom.cyclonedx.json"
 
-      - name: Attest
+      - name: Generate Docker image SBOM attestation
         uses: actions/attest-sbom@v1
         id: attest
         with:
@@ -72,10 +80,14 @@ jobs:
           sbom-path: "sbom.cyclonedx.json"
           push-to-registry: true
 
-      # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)."
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
+      - name: Generate SBOM SPDX of Docker image
+        uses: anchore/sbom-action@v0
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+          image: ${{ env.REGISTRY }}/zheng-bote/gh-a_cr-wiki:release
+          format: "spdx"
+          output-file: "sbom.spdx"
+
+      - name: publish SPDX
+        uses: anchore/sbom-action/publish-sbom@v0
+        with:
+          sbom-artifact-match: ".*\\.spdx$"
