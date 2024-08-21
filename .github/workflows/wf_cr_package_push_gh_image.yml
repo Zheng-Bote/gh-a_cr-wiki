@@ -59,7 +59,7 @@ jobs:
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
-          image: ${{ env.REGISTRY }}/zheng-bote/gh_workflows:release
+          image: ${{ env.REGISTRY }}/zheng-bote/gh-a_cr-wiki:release
           format: "cyclonedx-json"
           output-file: "sbom.cyclonedx.json"
 
