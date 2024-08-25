@@ -4,7 +4,8 @@ This GitHub Action publishes the contents of a directory to your project's wiki 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
+<details>
+<summary>Table of Contents</summary>
 
 - [Usage](#usage)
 - [Setup](#setup)
@@ -14,6 +15,7 @@ This GitHub Action publishes the contents of a directory to your project's wiki 
   - [4. Set a Repository Secret](#4-set-a-repository-secret)
 - [License](#license)
 
+</details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
