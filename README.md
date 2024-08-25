@@ -2,8 +2,19 @@
 
 This GitHub Action publishes the contents of a directory to your project's wiki from a workflow.
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Usage](#usage)
+- [Setup](#setup)
+  - [1. Enable Your Repository's Wikis Feature](#1-enable-your-repositorys-wikis-feature)
+  - [2. Create the First Wiki Page](#2-create-the-first-wiki-page)
+  - [3. Generate a Personal Access Token](#3-generate-a-personal-access-token)
+  - [4. Set a Repository Secret](#4-set-a-repository-secret)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 ## Usage
