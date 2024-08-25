@@ -2,6 +2,10 @@
 
 This GitHub Action publishes the contents of a directory to your project's wiki from a workflow.
 
+<!-- START doctoc -->
+<!-- END doctoc -->
+
+
 ## Usage
 
 In a new or existing workflow,
